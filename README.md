@@ -54,9 +54,9 @@ as its argument. It should return the object to be exported.
 ### Using modules
 
 Using modules is slightly trickier. Your main program specifies
-which modules are going to be used. But to actually load and run
-the module functions you need to call irc.require('registered-name')
-Otherwise the module function will not be executed.
+which modules are going to be used with `irc.uses(name, require(path))` 
+But to actually load and run the module functions you need to call 
+`irc.require('name')` - otherwise the module function will not be executed.
 
 # Methods
 
