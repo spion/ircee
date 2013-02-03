@@ -2,6 +2,22 @@
 
 _ircee_ is a tiny modular IRC library with a stream/event-emitter based API.
 
+
+### Why another library?
+
+Most of the advantages come from the stream / eventemitter based API. It 
+allows you to do things such as 
+
+* Live code reloading - connect the network connection in the parent process, 
+pipe it to the child process which loads the actual code. Signal the master
+to kill and respawn the child process - the code will be reloaded without
+losing the connection to the IRC server.
+
+* Browserify / use on different transports - for example, use it through 
+websockets in the browser by piping the connection streams using 
+[shoe](https://npmjs.org/package/shoe)
+
+
 # Example
 
 ```js
