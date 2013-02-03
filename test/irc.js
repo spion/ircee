@@ -13,8 +13,14 @@ exports.ping_pong = function(t) {
         s = fakeSocket();
 
     irc.load('core', require('../lib/core'));
-
     t.expect(2);
+    irc.on('connect', function() {
+        irc.require('core').login({
+            nick: 'test',
+            user: 'test',
+            name: 'test'
+        });
+    });
     irc.once('data', function(d) {
         t.ok(true, "nick and user data received");
         process.nextTick(function() {
