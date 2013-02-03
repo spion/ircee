@@ -4,6 +4,7 @@ _ircee_ is a tiny modular IRC library with a stream/event-emitter based API.
 
 # Example
 
+    ```js
     var ircee = require('ircee'),
         net = require('net');
 
@@ -30,12 +31,14 @@ _ircee_ is a tiny modular IRC library with a stream/event-emitter based API.
     // Connect the actual socket and pipe it to the client
     var s = net.connect(6667, 'irc.freenode.net');
     s.pipe(irc).pipe(s);
+    ```
 
 # Modules
 
 Modules are easy to write. Here is how
 the core module looks like:
 
+    ```js
     module.exports = function(irc) {
         irc.on('ping', function(e) {
             irc.send('pong', e.text);
@@ -47,6 +50,7 @@ the core module looks like:
         }
         return self;
     }
+    ```
 
 The module should be a function that receives the irc client
 as its argument. It should return the object to be exported.
