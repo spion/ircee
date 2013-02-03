@@ -95,7 +95,7 @@ Events are lower-case strings. Here are some common events:
 
 * privmsg - all message events, including CTCP
 * notice  - all notice events, including CTCP replies.
-* <number> - all numeric events
+* __number__ - all numeric events
 * event - catchall for all IRC events.
 
 Standard socket and stream events are also available
