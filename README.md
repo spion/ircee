@@ -25,5 +25,22 @@ _ircee_ is a tiny modular IRC library with a stream/event-emitter based API.
         });
     });
 
+# Modules
 
+Modules are extremely easy to write. Here is how
+the core module looks like:
 
+    module.exports = function(irc) {
+        irc.on('ping', function(e) {
+            irc.send('pong', e.text);
+        });
+        var self = {};
+        self.login = function login(params) {
+            irc.send('nick', params.nick);
+            irc.send('user', params.user, 0, '*', params.name);
+        }
+        return self;
+    }
+
+The module should be a function that receives the irc client
+as its argument. It should return the object to be exported.
