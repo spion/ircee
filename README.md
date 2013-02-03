@@ -84,7 +84,8 @@ You can also get the exported object:
 var module = irc.use(require('path/to/module'));
 ```
 
-If the module has already been loaded it will simply be returned.
+If the module has already been loaded, it will not be called again.
+Instead, the cached exported object will simply be returned by `irc.use`
 
 # Other methods
 
