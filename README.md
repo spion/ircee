@@ -49,7 +49,7 @@ s.pipe(irc).pipe(s);
 
 # Modules
 
-Modules are easy to write. Here is howthe core module looks like:
+Modules are easy to write. Here is how the core module looks like:
 
 ```js
 module.exports = function(irc) {
