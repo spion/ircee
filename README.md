@@ -5,7 +5,7 @@ _ircee_ is a tiny modular IRC library with a stream/event-emitter based API.
 
 ### Why another library?
 
-Most of the advantages come from the stream / eventemitter based API. It 
+Most of the advantages come from the stream / eventemitter API. It 
 allows you to do things such as 
 
 * Live code reloading - connect the network connection in the parent process, 
