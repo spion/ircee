@@ -67,11 +67,13 @@ The methods shown in the examples are all the available methods:
   in the IRC protocol, the final parameter is allowed to have multiple words. 
   For example:
 
+      ```js
       irc.send('privmsg', '#channel', 'Text to send');
       irc.send('privmsg', 'nickname', 'Some text');
       irc.send('mode', '#channel', '+ov', 'nick1', 'nick2', null);
       irc.send('topic', '#channel', 'New topic text');
-  
+      ```
+
   Notice that the mode command does not use a multi-word parameter and therefore
   we must add a null argument when calling irc.send
 
