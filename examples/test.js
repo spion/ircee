@@ -2,15 +2,12 @@ var ircee = require('ircee'),
     net = require('net');
 
 // Create a client that uses
-// the core module. This module
-// will keep the connection alive when loaded
-// and provide the login method.
-var irc = ircee()
-    .uses('core', require('ircee/core'));
+var irc = ircee();
 
 irc.on('connect', function() {
-    // load the core module
-    var core = irc.require('core');
+    // Load the core module. It keeps the connection alive 
+    // when loaded and provides the login method.    
+    var core = irc.use(require('ircee/core'));
     // use the login method to send the nickname
     core.login({
         nick: 'ircee_example',

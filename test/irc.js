@@ -12,11 +12,9 @@ exports.ping_pong = function(t) {
     var irc = IRC(),
         s = fakeSocket();
 
-    irc.uses('core', require('../lib/core'));
-
     t.expect(2);
     irc.on('connect', function() {
-        irc.require('core').login({
+        irc.use(require('../core')).login({
             nick: 'test',
             user: 'test',
             name: 'test'

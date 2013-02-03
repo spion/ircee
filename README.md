@@ -24,15 +24,13 @@ websockets in the browser by piping the connection streams using
 var ircee = require('ircee'),
     net = require('net');
 
-// Create a client that uses the core module. This module
-// will keep the connection alive when loaded and provide 
-// the login method.
-var irc = ircee()
-    .uses('core', require('ircee/core'));
+// Create a client
+var irc = ircee();
 
 irc.on('connect', function() {
-    // load the core module
-    var core = irc.require('core');
+    // Load the core module. It keeps the connection alive 
+    // when loaded and provides the login method.    
+    var core = irc.use(require('ircee/core'));
     // use the login method to send the nickname
     core.login({
         nick: 'ircee_example',
@@ -51,8 +49,7 @@ s.pipe(irc).pipe(s);
 
 # Modules
 
-Modules are easy to write. Here is how
-the core module looks like:
+Modules are easy to write. Here is howthe core module looks like:
 
 ```js
 module.exports = function(irc) {
@@ -73,12 +70,23 @@ as its argument. It should return the object to be exported.
 
 ### Using modules
 
-Using modules is slightly trickier. Your main program specifies
-which modules are going to be used with `irc.uses(name, require(path))` 
-But to actually load and run the module functions you need to call 
-`irc.require('name')` - otherwise the module function will not be executed.
+Using modules is easy. From your main program or from
+any other module, simply call `irc.use` in the following ways:
 
-# Methods
+```js
+irc.use(module_function); 
+irc.use(require('./path/to/module'));
+```
+
+You can also get the exported object:
+
+```js
+var module = irc.use(require('path/to/module'));
+```
+
+If the module has already been loaded it will simply be returned.
+
+# Other methods
 
 The methods shown in the examples are all the available methods:
 
@@ -97,13 +105,8 @@ The methods shown in the examples are all the available methods:
   Notice that the mode command does not use a multi-word parameter and therefore
   we must add a null argument when calling irc.send
 
-* `irc.uses` - Register a module. Note that this doesn't actually load the 
-  module, only tells ircee what the module function is.
-
-* `irc.require` - Returns a named module. If the module is not loaded,
-  it will be loaded and attached when required the first time.
-
-* `irc.on` etc - All eventemitter and duplex stream methods are available.
+* `irc.on` etc - All standard eventemitter and duplex stream methods are 
+  available.
 
 # Events
 
@@ -118,7 +121,6 @@ Standard socket and stream events are also available
 * connect - socket connection event
 * close - socket closing event.
 * data - raw data, line by line
-
 
 ### Event objects
 
@@ -139,4 +141,5 @@ properties:
 
 # License: 
 
-BSD
+MIT
+

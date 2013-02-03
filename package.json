@@ -28,6 +28,6 @@
     "client"
   ],
   "author": "spion <gorgi.kosev@gmail.com>",
-  "license": "BSD",
+  "license": "MIT",
   "readmeFilename": "README.md"
 }
