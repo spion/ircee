@@ -4,53 +4,53 @@ _ircee_ is a tiny modular IRC library with a stream/event-emitter based API.
 
 # Example
 
-    ```js
-    var ircee = require('ircee'),
-        net = require('net');
+```js
+var ircee = require('ircee'),
+    net = require('net');
 
-    // Create a client that uses the core module. This module
-    // will keep the connection alive when loaded and provide 
-    // the login method.
-    var irc = ircee()
-        .uses('core', require('ircee/core'));
+// Create a client that uses the core module. This module
+// will keep the connection alive when loaded and provide 
+// the login method.
+var irc = ircee()
+    .uses('core', require('ircee/core'));
 
-    irc.on('connect', function() {
-        // load the core module
-        var core = irc.require('core');
-        // use the login method to send the nickname
-        core.login({
-            nick: 'ircee_example',
-            user: 'ircee_example',
-            name: 'Look! I am online!'
-        });
+irc.on('connect', function() {
+    // load the core module
+    var core = irc.require('core');
+    // use the login method to send the nickname
+    core.login({
+        nick: 'ircee_example',
+        user: 'ircee_example',
+        name: 'Look! I am online!'
     });
+});
 
-    // Log all protocol lines to stdout
-    irc.on('event', function(e) { console.log(e.raw); });
+// Log all protocol lines to stdout
+irc.on('event', function(e) { console.log(e.raw); });
 
-    // Connect the actual socket and pipe it to the client
-    var s = net.connect(6667, 'irc.freenode.net');
-    s.pipe(irc).pipe(s);
-    ```
+// Connect the actual socket and pipe it to the client
+var s = net.connect(6667, 'irc.freenode.net');
+s.pipe(irc).pipe(s);
+```
 
 # Modules
 
 Modules are easy to write. Here is how
 the core module looks like:
 
-    ```js
-    module.exports = function(irc) {
-        irc.on('ping', function(e) {
-            irc.send('pong', e.text);
-        });
-        var self = {};
-        self.login = function login(params) {
-            irc.send('nick', params.nick);
-            irc.send('user', params.user, 0, '*', params.name);
-        }
-        return self;
+```js
+module.exports = function(irc) {
+    irc.on('ping', function(e) {
+        irc.send('pong', e.text);
+    });
+    var self = {};
+    self.login = function login(params) {
+        irc.send('nick', params.nick);
+        irc.send('user', params.user, 0, '*', params.name);
     }
-    ```
+    return self;
+}
+```
 
 The module should be a function that receives the irc client
 as its argument. It should return the object to be exported.
