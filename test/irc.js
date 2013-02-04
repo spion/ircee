@@ -1,35 +1,54 @@
 var Stream = require('stream'),
-    IRC = require('../index.js');
-
+    IRC = require('../index.js'),
+    duplex = require('duplexer'),
+    split = require('split');
 
 function fakeSocket() {
-    var r = new Stream();
-    r.readable = true;
-    return r;
+    return {i:split(), o: split() };
+}
+
+function client() {
+    var irc = IRC();
+    irc.on('connect', function() {
+        irc.use(require('../core')).login({
+            nick: 'test', user: 'test', name: 'test'
+        });
+    });
+    return irc;
 }
 
 exports.ping_pong = function(t) {
-    var irc = IRC(),
-        s = fakeSocket();
-
-    t.expect(2);
-    irc.on('connect', function() {
-        irc.use(require('../core')).login({
-            nick: 'test',
-            user: 'test',
-            name: 'test'
-        });
-    });
-    irc.once('data', function(d) {
+   var irc = client(), s = fakeSocket();
+   t.expect(2);
+   s.o.once('data', function(d) {
         t.ok(true, "nick and user data received");
         process.nextTick(function() {
-            irc.once('data', function(d) {
-                t.equals(d, 'pong :test\n', 'receive pong');
+            s.o.once('data', function(d) {
+                t.equals(d, 'pong :test', 'receive pong');
                 t.done();
             });
-            s.emit('data', 'ping :test\n');
+            s.i.emit('data', 'ping :test\n');
         });
     });
-    s.pipe(irc).pipe(s);
-    s.emit('connect');
+    s.i.pipe(irc).pipe(s.o);
+    s.i.emit('connect');
 }
+
+exports.reconnect = function(t) {
+   var irc = client(), s = fakeSocket();
+   t.expect(2);
+   s.o.once('data', function() {
+       t.ok(true, "connect");
+       s.i.end('432 :Error\n');
+       s.i.destroy();
+       var sx = fakeSocket();
+       sx.o.once('data', function(d) {
+           t.ok(true, "reconnect success");
+           t.done();
+       });
+       sx.i.pipe(irc).pipe(sx.o);
+   });    
+   s.i.pipe(irc).pipe(s.o);
+   s.i.emit('connect');
+}
+
