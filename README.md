@@ -47,6 +47,26 @@ var s = net.connect(6667, 'irc.freenode.net');
 s.pipe(irc).pipe(s);
 ```
 
+# Connect and disconnect
+
+If you are piping a socket directly to ircee it will recognize
+and re-emit its 'connect' event. Otherwise, you will need to tell it
+when the connection has been established:
+
+```js
+irc.emit('connect')
+```
+
+Disconnects arrive as close events. For example, to immediately reconnect 
+to the server, you can do this:
+
+```js
+irc.on('close', function() { 
+    var s = net.connect(...); 
+    s.pipe(irc).pipe(s);
+});
+```
+
 # Modules
 
 Modules are easy to write. Here is how the core module looks like:
