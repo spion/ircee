@@ -52,3 +52,15 @@ exports.reconnect = function(t) {
    s.i.emit('connect');
 }
 
+exports.safe_events = function(t) {
+    t.expect(1);
+
+    var irc = client(), s = fakeSocket();
+    irc.once('irc-close', function() {
+        t.ok(true, 'received safe close event');
+        t.done();
+    });
+    s.i.pipe(irc).pipe(s.o);
+    s.i.emit('data', ':nick!user@host close #channel :some text\n');
+    
+}

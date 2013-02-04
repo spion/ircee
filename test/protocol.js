@@ -18,3 +18,17 @@ exports.parse_privmsg = function(t) {
     }, res, 'protocol parse success');                                             
     t.done();
 }
+
+exports['last argument'] = function(t) {
+    var res = protocol.construct(['TOPIC','#channel','topic text']);
+    var hasLast = res.split(':').length > 1;
+    t.ok(hasLast);
+    t.done();
+}
+
+exports['no last argument'] = function(t) {
+    var res = protocol.construct(['TOPIC','#channel','topic text', null]);
+    var hasLast = res.split(':').length > 1;
+    t.ok(!hasLast);
+    t.done();
+}
