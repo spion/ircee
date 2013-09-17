@@ -1,0 +1,17 @@
+{
+  "name": "ircee-browserify-example",
+  "version": "0.1.0",
+  "description": "Using ircee with browserify",
+  "main": "server.js",
+  "dependencies": {
+    "ircee": "~0.2.0",
+    "shoe": "~0.0.15"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "spion",
+  "license": "MIT"
+}
