@@ -2,6 +2,8 @@ var shoe = require('shoe');
 var http = require('http');
 var net = require('net');
 var fs = require('fs');
+var url = require('url');
+var connector = require('./connector');
 
 var server = http.createServer(function(req, res) {
     var f = req.url == '/bundle.js' ? 'bundle.js' : 'index.html';
@@ -9,7 +11,8 @@ var server = http.createServer(function(req, res) {
 });
 
 var endpoint = shoe(function(stream) { 
-    stream.pipe(net.connect(6667, 'irc.freenode.net')).pipe(stream); 
+    var params = url.parse(stream.url);
+    stream.pipe(connector()).pipe(stream); 
 }); 
 
 endpoint.install(server, '/irc');

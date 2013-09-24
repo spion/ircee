@@ -1,10 +1,14 @@
 var ircee = require('ircee');
 var shoe = require('shoe');
 
+var connectorClient = require('./connector-client');
+
 var irc = ircee(), 
     stream = shoe('/irc'); 
     
-stream.pipe(irc).pipe(stream); 
+stream.pipe(irc)
+    .pipe(connectorClient('irc.freenode.net', 6667))
+    .pipe(stream); 
 
 irc.on('event', function(e) { 
     console.log("Received IRC event", e); 
@@ -15,3 +19,5 @@ irc.on('connect', function() {
     core.login({nick: 'somenick', user: 'someuser', name: 'Some name'}); 
     irc.send('join', '#node.js', null);
 });
+
+window.irc = irc;

@@ -5,7 +5,10 @@
   "main": "server.js",
   "dependencies": {
     "ircee": "~0.2.0",
-    "shoe": "~0.0.15"
+    "shoe": "~0.0.15",
+    "event-stream": "~3.0.16",
+    "duplexer": "~0.1.1",
+    "through": "~2.3.4"
   },
   "devDependencies": {},
   "scripts": {
