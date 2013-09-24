@@ -1,6 +1,6 @@
 var protocol = require('../lib/protocol.js');
 
-exports.parse_privmsg = function(t) {
+exports['parse privmsg'] = function(t) {
     
     var res = protocol.parse(':nick!user@host PRIVMSG #channel :text goes here')
     t.deepEqual({ 
@@ -15,9 +15,10 @@ exports.parse_privmsg = function(t) {
         params: [ '#channel' ],
         target: '#channel',
         text: 'text goes here' 
-    }, res, 'protocol parse success');                                             
+    }, res, 'protocol parse success'); 
     t.done();
 }
+
 
 exports['last argument'] = function(t) {
     var res = protocol.construct(['TOPIC','#channel','topic text']);
@@ -32,3 +33,4 @@ exports['no last argument'] = function(t) {
     t.ok(!hasLast);
     t.done();
 }
+

@@ -1,1 +1,4 @@
 node_modules
+.coverage_data
+.npmignore
+cover_html

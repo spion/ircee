@@ -15,8 +15,10 @@ losing the connection to the IRC server.
 
 * Browserify / use on different transports - for example, use it through 
 websockets in the browser by piping the connection streams using 
-[shoe](https://npmjs.org/package/shoe)
+[shoe](https://npmjs.org/package/shoe). Here is a [complete 
+example using browserify](https://github.com/spion/ircee/tree/master/examples/browserify)
 
+The modular design allows for easy extensibility and testing.
 
 # Example
 
