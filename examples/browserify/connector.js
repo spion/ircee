@@ -20,7 +20,6 @@ function connector() {
 
             if (cmd == 'CONNECT') {
                 var sock = net.connect({host: host, port: port});
-                //inp.unpipe(spl);
                 proto.pipe(sock).pipe(out);
                 connected = true;
             } else {
@@ -28,7 +27,7 @@ function connector() {
             }
         }
     });
-    inp.pipe(spl).pipe(proto).pipe(out);
+    inp.pipe(spl).pipe(proto);
     return duplexer(inp, out);
 }
 
