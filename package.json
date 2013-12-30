@@ -30,6 +30,6 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "nodeunit": "~0.7.4"
+    "tape": "~2.3.2"
   }
 }

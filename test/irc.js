@@ -3,6 +3,9 @@ var Stream = require('stream'),
     duplex = require('duplexer'),
     split = require('split');
 
+var t = require('tape');
+
+
 function fakeSocket() {
     return {i:split(), o: split() };
 }
@@ -17,26 +20,24 @@ function client() {
     return irc;
 }
 
-exports.ping_pong = function(t) {
+t.test('ping pong', function(t) {
    var irc = client(), s = fakeSocket();
-   t.expect(2);
    s.o.once('data', function(d) {
         t.ok(true, "nick and user data received");
         process.nextTick(function() {
             s.o.once('data', function(d) {
                 t.equals(d, 'pong :test', 'receive pong');
-                t.done();
+                t.end();
             });
             s.i.emit('data', 'ping :test\n');
         });
     });
     s.i.pipe(irc).pipe(s.o);
     s.i.emit('connect');
-}
+});
 
-exports.reconnect = function(t) {
+t.test('reconnect', function(t) {
    var irc = client(), s = fakeSocket();
-   t.expect(2);
    s.o.once('data', function() {
        t.ok(true, "connect");
        s.i.end('432 :Error\n');
@@ -44,23 +45,23 @@ exports.reconnect = function(t) {
        var sx = fakeSocket();
        sx.o.once('data', function(d) {
            t.ok(true, "reconnect success");
-           t.done();
+           t.end();
        });
        sx.i.pipe(irc).pipe(sx.o);
    });    
    s.i.pipe(irc).pipe(s.o);
    s.i.emit('connect');
-}
+});
 
-exports.safe_events = function(t) {
-    t.expect(1);
+t.test('safe events', function(t) {
 
     var irc = client(), s = fakeSocket();
     irc.once('irc-close', function() {
         t.ok(true, 'received safe close event');
-        t.done();
+        t.end();
     });
     s.i.pipe(irc).pipe(s.o);
     s.i.emit('data', ':nick!user@host close #channel :some text\n');
     
-}
+});
+

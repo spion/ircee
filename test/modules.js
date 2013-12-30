@@ -1,6 +1,7 @@
 var ircee = require('../index');
+var t = require('tape');
 
-exports.caching = function(t) {
+t.test('caching', function(t) {
     var counter = 0;
     var mod = function() {
         ++counter;
@@ -9,5 +10,5 @@ exports.caching = function(t) {
     irc.use(mod);
     irc.use(mod);
     t.equals(counter, 1, 'module called only once')
-    t.done();
-}
+    t.end();
+});
