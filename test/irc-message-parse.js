@@ -59,3 +59,9 @@ t.test('tags', {skip: true}, function(t) {
     t.end();
 });
 
+t.test('join issue #1', function(t) {
+    var res = parse(":nick!user@host JOIN #channel");
+    t.equal(res.cmd, 'JOIN');
+    t.equal(res.target, '#channel');
+    t.end();
+});
