@@ -65,3 +65,10 @@ t.test('join issue #1', function(t) {
     t.equal(res.target, '#channel');
     t.end();
 });
+
+t.test('\\r issue', function(t) {
+    var res = parse(":irc.znc.in 464 apx :Password required\r");
+    t.equal(res.cmd, '464');
+    t.equal(res.text, 'Password required');
+    t.end();
+});
