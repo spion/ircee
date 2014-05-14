@@ -1,6 +1,6 @@
 {
   "name": "ircee",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "A tiny modular IRC library with a stream / event-emitter based API",
   "main": "index.js",
   "directories": {
