@@ -72,3 +72,10 @@ t.test('\\r issue', function(t) {
     t.equal(res.text, 'Password required');
     t.end();
 });
+
+t.test(':nick PRIVMSG target :message goes here', function(t) {
+    var res = parse(":nick PRIVMISG target :message goes here");
+    t.equal(res.user.nick, 'nick');
+    t.equal(res.text, 'message goes here');
+    t.end();
+});
