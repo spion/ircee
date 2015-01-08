@@ -79,3 +79,11 @@ t.test(':nick PRIVMSG target :message goes here', function(t) {
     t.equal(res.text, 'message goes here');
     t.end();
 });
+
+t.test('contrived example', function(t) {
+    var res = parse(":nick@kcin!user!resu@host!tsoh@host PRIVMSG #channel :message");
+    t.equal(res.user.nick, 'nick@kcin');
+    t.equal(res.user.user, 'user!resu');
+    t.equal(res.user.host, 'host!tsoh@host');
+    t.end();
+});
